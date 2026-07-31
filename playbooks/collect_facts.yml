@@ -1,0 +1,21 @@
+---
+- name: Coletar informações da máquina
+  hosts: all
+  gather_facts: true
+  become: false
+
+  tasks:
+    - name: Exibir informações principais
+      ansible.builtin.debug:
+        msg:
+          - "========================================"
+          - "Hostname        : {{ ansible_hostname }}"
+          - "FQDN            : {{ ansible_fqdn }}"
+          - "Sistema         : {{ ansible_distribution }} {{ ansible_distribution_version }}"
+          - "Kernel          : {{ ansible_kernel }}"
+          - "Arquitetura     : {{ ansible_architecture }}"
+          - "CPU (vCPUs)     : {{ ansible_processor_vcpus }}"
+          - "Memória Total   : {{ (ansible_memtotal_mb / 1024) | round(2) }} GB"
+          - "IP Principal    : {{ ansible_default_ipv4.address | default('N/A') }}"
+          - "Interfaces      : {{ ansible_interfaces }}"
+          - "========================================"
